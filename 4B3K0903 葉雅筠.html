@@ -1,0 +1,481 @@
+﻿<!DOCTYPE html>
+<!--
+============================================================
+  晴日甜室 Sunny Day
+  1. 導覽列 nav   2. 大圖 hero   3. 三大特色   4. 人氣商品   5. footer
+============================================================
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <!-- 手機上正常縮放-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>晴日甜室 Sunny Day</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧁</text></svg>">
+
+  <!-- 字體：Quicksand(英文圓體) + Noto Sans TC(中文) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       【1】顏色與基本變數
+       ========================================================= */
+    :root {
+      --cream:       #EDF0E4;  /* 背景：柔和奶綠 */
+      --matcha:      #88A172;  /* 主色：抹茶綠 */
+      --matcha-deep: #5E7350;  /* 深綠（按鈕、標題） */
+      --berry:       #E08AA0;  /* 點綴：粉 */
+      --ink:         #463F3A;  /* 文字：暖黑 */
+      --ink-soft:    #8A817B;  /* 次要文字：灰 */
+      --card:        #FFFFFF;  /* 卡片白底 */
+      --radius:      20px;     /* 圓角大小 */
+      --shadow:      0 10px 30px rgba(70,63,58,.08); /* 柔和陰影 */
+    }
+
+    /* 清掉元素的預設邊距，盒模型統一 */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.7;
+    }
+
+    /* 內容置中，最大寬度 1100px，左右留白 */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* 連結預設樣式 */
+    a { color: inherit; text-decoration: none; }
+
+
+    /* =========================================================
+       【2】導覽列 nav
+       ========================================================= */
+    .nav {
+      position: sticky;       /* 捲動時固定在頂端 */
+      top: 0;
+      z-index: 10;
+      background: rgba(237,240,228,.9);
+      backdrop-filter: blur(6px);  /* 半透明毛玻璃效果 */
+      border-bottom: 1px solid rgba(70,63,58,.08);
+    }
+    .nav .container {
+      display: flex;                 /* 讓 logo 和選單左右排開 */
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;               /* 螢幕太窄時自動換行 */
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    /* 左上角品牌名 */
+    .brand {
+      font-family: "Quicksand", sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--matcha-deep);
+    }
+    .brand span { color: var(--berry); }
+
+    /* 右邊的選單連結 */
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--matcha); }
+
+
+    /* =========================================================
+       【3】hero 大圖區
+       ========================================================= */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: #FBF6EE;
+      text-align: center;
+      padding: 90px 0 100px;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      background:
+        linear-gradient(rgba(251,246,238,.18), rgba(251,246,238,.30)),
+        url("img/header.jpg") center/cover;
+      filter: blur(3px);
+      transform: scale(1.02);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(220,230,207,.38) 0%, rgba(251,246,238,.46) 55%, rgba(246,220,228,.34) 100%);
+    }
+    .hero .container {
+      position: relative;
+      z-index: 1;
+    }
+    .hero .eyebrow {            /* 標題上方的小字 */
+      color: var(--matcha-deep);
+      font-weight: 700;
+      letter-spacing: 4px;
+      font-size: 14px;
+    }
+    .hero h1 {
+      font-family: "Quicksand", sans-serif;
+      font-size: 56px;
+      color: var(--matcha-deep);
+      margin: 14px 0 6px;
+    }
+    .hero h1 span { color: var(--matcha-deep); }
+    .hero h2 {
+      font-size: 26px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      max-width: 520px;
+      margin: 0 auto 32px;
+      color: var(--ink);  
+      font-weight: 500;
+    }
+    /* 按鈕：用 .btn */
+    .btn {
+      display: inline-block;
+      background: var(--matcha-deep);
+      color: #fff;
+      padding: 14px 34px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .2s, background .2s;  /* 滑過時的動畫 */
+    }
+    .btn:hover {
+      background: var(--matcha);
+      transform: translateY(-2px);   /* 滑過時微微浮起 */
+    }
+
+
+    /* =========================================================
+       【4】共用的區塊標題（每個 section 上面的大標）
+       ========================================================= */
+    .section { padding: 80px 0; }   /* 每個區塊上下留白 */
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-title h3 {
+      font-size: 34px;
+      color: var(--matcha-deep);
+    }
+    .section-title p {
+      color: var(--ink-soft);
+      margin-top: 8px;
+    }
+
+
+    /* =========================================================
+       【5】三大特色（三欄卡片）
+       用 grid 切成 3 欄，手機上會變 1 欄
+       ========================================================= */
+    /* 三大特色區塊：底色跟人氣商品區一樣 */
+    #about { background: #F4EEE2; }
+
+    /* 三個「正圓」並排，圖示＋標題＋文字全裝在圓圈裡 */
+    .features {
+      display: flex;             /* 用 flex 讓圓圈置中並排 */
+      flex-wrap: wrap;           /* 螢幕窄時自動換行 */
+      justify-content: center;
+      gap: 40px;
+    }
+    .feature-card {
+      width: 250px;
+      height: 250px;             /* 寬高相等 + 50% 圓角 = 正圓 */
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #BFD2A6; /* 細抹茶綠圓框 */
+      box-shadow: 0 14px 32px rgba(94,115,80,.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 38px rgba(94,115,80,.2);
+    }
+
+    .feature-icon { color: var(--matcha-deep); margin-bottom: 12px; line-height: 0; }
+    .feature-icon svg { width: 40px; height: 40px; }
+    .feature-card h4 { font-size: 19px; margin-bottom: 6px; color: var(--matcha-deep); }
+    .feature-card p { color: var(--ink-soft); font-size: 13.5px; line-height: 1.5; }
+
+
+    /* =========================================================
+       【6】人氣商品（商品卡片牆）
+       ========================================================= */
+    .menu-section { background: #F4EEE2; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);  /* 3 欄 */
+      gap: 26px;
+    }
+    .product-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;          /* 讓圖片的圓角不會超出去 */
+      box-shadow: var(--shadow);
+      transition: transform .2s;
+    }
+    .product-card:hover { transform: translateY(-6px); }
+    .product-img {
+      height: 170px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+      background-position: center;
+      background-size: cover;
+      color: transparent;
+      text-shadow: none;
+    }
+    .bg-1 { background-color: #F6DCE4; background-image: url("img/strawberrycake.jpg"); }
+    .bg-2 { background-color: #E3EAD3; background-image: url("img/matcha.jpg"); }
+    .bg-3 { background-color: #FBEAD2; background-image: url("img/pudding.jpg"); }
+    .bg-4 { background-color: #E7E0F0; background-image: url("img/yogurt.jpg"); }
+    .bg-5 { background-color: #D8E8E4; background-image: url("img/milktea.jpg"); }
+    .bg-6 { background-color: #F2E0D5; background-image: url("img/creampuff.jpg"); }
+    .product-info { padding: 20px 22px; }
+    .product-info h4 { font-size: 18px; margin-bottom: 4px; }
+    .product-info .desc { color: var(--ink-soft); font-size: 14px; margin-bottom: 12px; }
+    .product-info .price {
+      font-family: "Quicksand", sans-serif;
+      font-weight: 700;
+      color: var(--berry);
+      font-size: 20px;
+    }
+
+
+    /* =========================================================
+       【7】footer 頁尾
+       ========================================================= */
+    .footer {
+      background: var(--matcha-deep);
+      color: #EAF0E2;
+      text-align: center;
+      padding: 60px 0;
+    }
+    .footer .brand { color: #fff; margin-bottom: 8px; }
+    .footer-addr { color: rgba(255,255,255,.8); margin-bottom: 30px; }
+
+    /* Follow us 一整列：文字在左、圖示在右 */
+    .follow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 30px;
+    }
+    .follow-title {
+      font-family: "Quicksand", sans-serif;
+      letter-spacing: 2px;
+      font-size: 20px;
+      color: #fff;
+    }
+    .socials { display: flex; gap: 22px; }
+    .socials a { color: #fff; display: inline-flex; transition: opacity .2s; }
+    .socials a:hover { opacity: .65; }   /* 滑過變淡 */
+    .socials svg { width: 24px; height: 24px; fill: currentColor; }
+
+    .footer small { display: block; color: rgba(255,255,255,.6); }
+    .footer small + small { margin-top: 6px; }
+
+
+    /* =========================================================
+       【8】手機版（螢幕寬度 ≤ 760px 時套用）
+       把 3 欄變成 1 欄、字體縮小一點
+       ========================================================= */
+    @media (max-width: 760px) {
+      .hero h1 { font-size: 40px; }
+      .hero h2 { font-size: 20px; }
+      .features,
+      .products { grid-template-columns: 1fr; }  /* 改成 1 欄 */
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== 【2】導覽列 ===== -->
+  <nav class="nav">
+    <div class="container">
+      <div class="brand">晴日<span>甜室</span></div>
+      <!-- href="#id" 會跳到下面對應 id 的區塊 -->
+      <ul class="nav-links">
+        <li><a href="#top">首頁</a></li>
+        <li><a href="#about">關於我們</a></li>
+        <li><a href="#menu">菜單</a></li>
+        <li><a href="#contact">聯絡我們</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 【3】hero 大圖 ===== -->
+  <header class="hero" id="top">
+    <div class="container">
+      <p class="eyebrow">SUNNY DAY</p>
+      <h1>晴日<span>甜室</span></h1>
+      <h2>手作甜點 × 暖心茶飲</h2>
+      <p>每一份甜點都當天現做，陪你度過一段晴朗的午後。<br>有空的時候，來坐坐吧。</p>
+      <a href="#menu" class="btn">查看菜單</a>
+    </div>
+  </header>
+
+  <!-- ===== 【5】三大特色 ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-title">
+        <h3>我們相信的事</h3>
+        <p>把每天的甜，認真做好</p>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10h14l-1.4 9.3a1 1 0 0 1-1 .7H7.4a1 1 0 0 1-1-.7L5 10z"/><path d="M5.5 10a3 3 0 0 1 1.3-5.4A3.4 3.4 0 0 1 12 3a3.4 3.4 0 0 1 5.2 1.6A3 3 0 0 1 18.5 10"/></svg></div>
+          <h4>每日手作</h4>
+          <p>每天清晨現做，<br>只用真材實料。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-9 6.5-14 16-14 0 9-6 15-15 15"/><path d="M4 20c3.5-3.5 7-6 11-7"/></svg></div>
+          <h4>嚴選食材</h4>
+          <p>當季水果＋<br>北海道鮮奶油。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M17 10.5h2a2 2 0 0 1 0 4h-2"/><path d="M8 3.2c-.6.8-.6 1.6 0 2.4M12 3.2c-.6.8-.6 1.6 0 2.4"/><path d="M3 21h16"/></svg></div>
+          <h4>暖心茶飲</h4>
+          <p>手沖茶配甜點，<br>慢慢坐沒關係。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 【6】人氣商品 ===== -->
+  <section class="section menu-section" id="menu">
+    <div class="container">
+      <div class="section-title">
+        <h3>人氣商品</h3>
+        <p>大家最常回購的幾款</p>
+      </div>
+      <div class="products">
+
+        <div class="product-card">
+          <div class="product-img bg-1" aria-label="草莓雲朵蛋糕照片"></div>
+          <div class="product-info">
+            <h4>草莓雲朵蛋糕</h4>
+            <p class="desc">鬆軟蛋糕搭配香甜草莓</p>
+            <span class="price">NT$120</span>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-img bg-2" aria-label="抹茶輕乳酪照片"></div>
+          <div class="product-info">
+            <h4>抹茶輕乳酪</h4>
+            <p class="desc">細緻乳酪口感，帶著清爽抹茶香</p>
+            <span class="price">NT$110</span>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-img bg-3" aria-label="草莓布丁照片"></div>
+          <div class="product-info">
+            <h4>草莓布丁</h4>
+            <p class="desc">滑嫩布丁上放一顆新鮮草莓</p>
+            <span class="price">NT$60</span>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-img bg-4" aria-label="莓果優格杯照片"></div>
+          <div class="product-info">
+            <h4>莓果優格杯</h4>
+            <p class="desc">無糖優格配三種莓果</p>
+            <span class="price">NT$95</span>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-img bg-5" aria-label="經典珍珠奶茶照片"></div>
+          <div class="product-info">
+            <h4>經典珍珠奶茶</h4>
+            <p class="desc">經典奶茶搭配Q彈黑糖珍珠</p>
+            <span class="price">NT$70</span>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-img bg-6" aria-label="鮮奶油泡芙照片"></div>
+          <div class="product-info">
+            <h4>鮮奶油泡芙</h4>
+            <p class="desc">現擠香草卡士達，外酥內軟</p>
+            <span class="price">NT$45</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 【7】footer ===== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="brand">晴日甜室 Sunny Day</div>
+      <p class="footer-addr">台南市永康區甜甜路 1 號　|　每日 11:00 – 20:00</p>
+
+      <!-- Follow us ＋ 社群圖示（同一列：文字左、圖示右）-->
+      <div class="follow-row">
+        <h4 class="follow-title">Follow us</h4>
+        <!-- 每個 <a> 的 href 換成你的社群網址即可 -->
+        <div class="socials">
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.5V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M23 4.9c-.8.4-1.7.6-2.6.8a4.5 4.5 0 0 0 2-2.5c-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 1.6 3.7a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.6v.1a4.5 4.5 0 0 0 3.6 4.4 4.5 4.5 0 0 1-2 .1 4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 19.5a12.7 12.7 0 0 0 6.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.9 3.9 0 0 1-2.3-2.3c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2a3.9 3.9 0 0 1 2.3-2.3c.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.2-2.1.4-.5.2-.9.5-1.3.8-.3.4-.6.8-.8 1.3-.1.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.3 1.7.4 2.1.2.5.5.9.8 1.3.4.3.8.6 1.3.8.4.1 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.3 2.1-.4.5-.2.9-.5 1.3-.8.3-.4.6-.8.8-1.3.1-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.3-1.7-.4-2.1a3.6 3.6 0 0 0-.8-1.3c-.4-.3-.8-.6-1.3-.8-.4-.2-1-.4-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.2-8.3a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/></svg>
+        </a>
+        </div>
+      </div>
+
+      <small>© 2026 晴日甜室 Sunny Day.</small>
+      <small>4B3K0903 葉雅筠｜網頁設計期末作業</small>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
